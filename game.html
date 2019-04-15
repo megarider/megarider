@@ -1,0 +1,228 @@
+<!DOCTYPE html> 
+
+<html>
+<head>
+  <title>MegaRider Amarture Video Game - When will you reach Nairobi?</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <link href="common.css" rel="stylesheet" type="text/css" />
+  
+  <style>
+	.logged-in-user-only { display:none }
+  </style>
+</head> 
+
+<body style="background-color:black;color:white"> 
+	
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '870821763256458',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v3.2'
+    });
+	
+	FB.getLoginStatus(function(response) {
+	  if (response.status === 'connected') {
+		// The user is logged in and has authenticated your
+		// app, and response.authResponse supplies
+		// the user's ID, a valid access token, a signed
+		// request, and the time the access token 
+		// and signed request each expire.
+		
+		var uid = response.authResponse.userID;
+		var accessToken = response.authResponse.accessToken;
+		
+		//alert("connected");
+		
+		 document.getElementById("game_content").style.display="block";
+		 document.getElementById("message").style.display="none";
+	  }
+	});
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   
+	
+   
+   
+	function logout() {
+
+		// initialize the library with your Facebook API key
+		FB.init({ appId: '870821763256458', version: 'v3.2' });
+
+		//Fetch the status so that we can log out.
+		//You must have the login status before you can logout,
+		//and if you authenticated via oAuth (server side), this is necessary.
+		//If you logged in via the JavaScript SDK, you can simply call FB.logout()
+		//once the login status is fetched, call handleSessionResponse
+		FB.getLoginStatus(handleSessionResponse);
+		
+		window.location.href = "index.html";
+	
+	}
+	
+	//handle a session response from any of the auth related calls
+	function handleSessionResponse(response) {
+		
+		FB.logout(handleSessionResponse);
+	}
+	
+	
+</script>
+	
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2&appId=870821763256458&autoLogAppEvents=1"></script>
+
+<div>
+	<h2>MegaRider Amarture Video Game</h2>
+	<span>When will you reach Nairobi?</span>
+	<span>(Old skul brought back to life)</span>
+	<hr/>
+</div>
+	<!--
+	<div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div>-->
+	
+	
+	<div style="text-align:right"><button onclick="javascript:logout();">Logout</button></div>
+	
+	<script src="https://connect.facebook.net/en_US/fbinstant.6.2.js"></script>
+	
+	<script type="text/javascript">
+		const assets = [
+		   'common.css',
+		   'common.js',
+		   'game.js',
+		   'stats.js',
+		  'images/background.png',
+		  'images/sprites.png',
+		  'images/background.js',
+		  'images/sprites.js',
+		  'music/playlist.mp3'
+		];
+		
+		 window.onload = function() {
+		  $('#game_content').hide();
+		  // When the window loads, start to initialize the SDK
+		  FBInstant.initializeAsync().then(function() {
+			// We can start to load assets
+			for (let i in assets) {
+			  // When preloading assets, make sure to report the progress
+			  FBInstant.setLoadingProgress(i / assets.length * 100);
+			}
+			// Now that assets are loaded, call startGameAsync
+			FBInstant.startGameAsync().then(onStart);
+		  });
+		};
+		
+		 function onStart() {
+		  // This is called when the user has tapped Play
+		  // Information from the SDK can now be accessed
+		  $('#photo').attr('src', FBInstant.player.getPhoto());
+		  $('#player-name').html(FBInstant.player.getName());
+		  $('#player-id').html(FBInstant.player.getID());
+		  $('#context-type').html(FBInstant.context.getType());
+		  $('#info-section').show();
+		}
+		
+	</script>
+
+
+<div id="game_content" class="logged-in-user-only">
+
+  <table id="controls" >
+    <tr>
+      <td colspan="2"> 
+        <a href='game.html'>
+		<span style="padding:5px; border:1px solid pink; border-radius:5px; font-size:18px; font-style:bold;color:white; text-decoration:none">RESET</a>
+      </td>
+    </tr>
+    <tr><td id="fps" colspan="2" align="right"></td></tr>
+    <tr>
+      <th><label for="resolution">Resolution :</label></th>
+      <td>
+        <select id="resolution" style="width:100%">
+          <option value='fine'>Fine (1280x960)</option>
+          <option selected value='high'>High (1024x768)</option>
+          <option value='medium'>Medium (640x480)</option>
+          <option value='low'>Low (480x360)</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><label for="lanes">Lanes :</label></th>
+      <td>
+        <select id="lanes">
+          <option>1</option>
+          <option>2</option>
+          <option selected>3</option>
+          <option>4</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <th><label for="roadWidth">Road Width (<span id="currentRoadWidth"></span>) :</label></th>
+      <td><input id="roadWidth" type='range' min='500' max='3000' title="integer (500-3000)"></td>
+    </tr>
+    <tr>
+      <th><label for="cameraHeight">CameraHeight (<span id="currentCameraHeight"></span>) :</label></th>
+      <td><input id="cameraHeight" type='range' min='500' max='5000' title="integer (500-5000)"></td>
+    </tr>
+    <tr>
+      <th><label for="drawDistance">Draw Distance (<span id="currentDrawDistance"></span>) :</label></th>
+      <td><input id="drawDistance" type='range' min='100' max='500' title="integer (100-500)"></td>
+    </tr>
+    <tr>
+      <th><label for="fieldOfView">Field of View (<span id="currentFieldOfView"></span>) :</label></th>
+      <td><input id="fieldOfView" type='range' min='80' max='140' title="integer (80-140)"></td>
+    </tr>
+    <tr>
+      <th><label for="fogDensity">Mist Density (<span id="currentFogDensity"></span>) :</label></th>
+      <td><input id="fogDensity" type='range' min='0' max='50' title="integer (0-50)"></td>
+    </tr>
+  </table>
+  
+  <div id='instructions' style="border:1px dotted white">
+    <p>Use the <b>arrow keys</b> to drive the car.</p>
+	<br/>
+	<hr/>
+	<p style="font-size:11px">Created by <b>Kevin Oyowe</b> as proof of concept. Original game at <a href="https://codeincomplete.com/games/racer/v4-final/"> https://codeincomplete.com/games/racer/v4-final/ </a></p>
+  </div>
+
+  <div id="racer">
+    <div id="hud">
+      <span id="speed"            class="hud"><span id="speed_value" class="value">0</span> mph</span>
+      <span id="current_lap_time" class="hud">Time: <span id="current_lap_time_value" class="value">0.0</span></span> 
+      <span id="last_lap_time"    class="hud">Last Lap: <span id="last_lap_time_value" class="value">0.0</span></span>
+      <span id="fast_lap_time"    class="hud">Fastest Lap: <span id="fast_lap_time_value" class="value">0.0</span></span>
+    </div>
+    <canvas id="canvas">
+      Sorry, this example cannot be run because your browser does not support the &lt;canvas&gt; element
+    </canvas>
+    Loading...
+  </div>
+
+  <audio id='music'>
+	<source src="music/playlist.mp3">
+  </audio>
+  <span id="mute"></span>
+  
+		  <script src="stats.js"></script>
+		  <script src="common.js"></script>
+		  <script src="game.js"></script>
+  
+  </div>
+  
+	<div>
+		<span id="message" style="font-size:">You are not logged in.</span>
+	</div>
+  
+</body> 
+</html>
