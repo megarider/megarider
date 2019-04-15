@@ -32,7 +32,11 @@
 	
    
 	FB.getLoginStatus(function(response) {
-	    statusChangeCallback(response);
+	    var loginStatus = statusChangeCallback(response);
+		
+		if(loginStatus['status']=='connected'){
+			alert("logged in");
+		}
 	});
 	
 	
@@ -49,6 +53,9 @@
 </div>
 	
 	<div class="fb-login-button" data-size="large" data-button-type="login_with" data-auto-logout-link="true" data-use-continue-as="true"></div>
+
+
+<div id="game_content">
 
   <table id="controls" >
     <tr>
@@ -133,5 +140,6 @@
 		  <script src="common.js"></script>
 		  <script src="game.js"></script>
   
+  </div>
 </body> 
 </html>
